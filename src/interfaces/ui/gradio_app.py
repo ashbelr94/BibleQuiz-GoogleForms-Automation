@@ -9,16 +9,27 @@ from src.application.preview_quiz import PreviewQuizUseCase
 from src.application.create_quiz import CreateQuizUseCase
 from src.domain.models import Language, Quiz
 
-def get_use_cases():
-    """Initializes and returns the use cases with necessary adapters."""
-    creds = get_google_credentials()
-    sheet_repo = GoogleSheetRepository(creds)
-    form_service = GoogleFormService(creds)
+# Global containers for initialized use cases
+# Initializing them globally prevents re-auth checks on every button click
+_PREVIEW_USE_CASE: Optional[PreviewQuizUseCase] = None
+_CREATE_USE_CASE: Optional[CreateQuizUseCase] = None
+
+def initialize_services():
+    """Initializes and returns the use cases. Handled as a singleton."""
+    global _PREVIEW_USE_CASE, _CREATE_USE_CASE
     
-    preview_use_case = PreviewQuizUseCase(sheet_repo)
-    create_use_case = CreateQuizUseCase(sheet_repo, form_service)
+    if _PREVIEW_USE_CASE is None or _CREATE_USE_CASE is None:
+        try:
+            creds = get_google_credentials()
+            sheet_repo = GoogleSheetRepository(creds)
+            form_service = GoogleFormService(creds)
+            
+            _PREVIEW_USE_CASE = PreviewQuizUseCase(sheet_repo)
+            _CREATE_USE_CASE = CreateQuizUseCase(sheet_repo, form_service)
+        except Exception as e:
+            raise RuntimeError(f"Failed to connect to Google Services: {str(e)}")
     
-    return preview_use_case, create_use_case
+    return _PREVIEW_USE_CASE, _CREATE_USE_CASE
 
 def format_questions_to_df(quiz: Quiz) -> pd.DataFrame:
     """Converts quiz questions to a Pandas DataFrame for display."""
@@ -34,13 +45,14 @@ def format_questions_to_df(quiz: Quiz) -> pd.DataFrame:
 def handle_preview(week: int, lang_choice: str):
     """Action for the Preview button."""
     try:
+        preview_use_case, _ = initialize_services()
+        
         lang = None
         if lang_choice == "English":
             lang = Language.ENGLISH
         elif lang_choice == "Tamil":
             lang = Language.TAMIL
             
-        preview_use_case, _ = get_use_cases()
         result = preview_use_case.execute(week, language=lang)
         
         if not result:
@@ -83,7 +95,7 @@ def handle_preview(week: int, lang_choice: str):
             week # Update last_preview_week
         )
     except Exception as e:
-        return (f"### ❌ Unexpected Error\n{str(e)}", "", pd.DataFrame(), "", pd.DataFrame(), "", 0)
+        return (f"### ❌ Initialization/Auth Error\n{str(e)}", "", pd.DataFrame(), "", pd.DataFrame(), "", 0)
 
 def handle_create_request(week: int, last_preview_week: int, lang_choice: str):
     """Validates week match and performs creation if valid."""
@@ -94,15 +106,14 @@ def handle_create_request(week: int, last_preview_week: int, lang_choice: str):
         )
     
     try:
+        _, create_use_case = initialize_services()
+        
         lang = None
         if lang_choice == "English":
             lang = Language.ENGLISH
         elif lang_choice == "Tamil":
             lang = Language.TAMIL
             
-        _, create_use_case = get_use_cases()
-        
-        # Show a temporary status if possible, but handle_create_request is a single call
         result = create_use_case.execute(week, language=lang)
         
         if not result:
@@ -120,7 +131,7 @@ def handle_create_request(week: int, last_preview_week: int, lang_choice: str):
         
         return output_md
     except Exception as e:
-        return f"### ❌ Unexpected Error\n{str(e)}"
+        return f"### ❌ Initialization/Auth Error\n{str(e)}"
 
 # Build Gradio UI
 with gr.Blocks(title="Bible Quiz Automation", theme=gr.themes.Soft()) as demo:

@@ -39,9 +39,10 @@ def get_google_credentials(credentials_path: str = "credentials.json", token_pat
             print("\nOpening your browser for Google Authentication...")
             flow = InstalledAppFlow.from_client_secrets_file(credentials_path, SCOPES)
             
-            # Use a fixed port to help with Safari redirects, and print the URL as fallback
+            # Using port=0 allows the OS to pick any available port, 
+            # preventing "Address already in use" errors (WinError 10048).
             creds = flow.run_local_server(
-                port=8080, 
+                port=0, 
                 prompt='select_account',
                 open_browser=True
             )
