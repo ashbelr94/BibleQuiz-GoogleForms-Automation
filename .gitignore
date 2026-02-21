@@ -16,6 +16,7 @@ token.json
 
 # Logs
 *.log
+logs/
 
 # IDEs
 .vscode/
