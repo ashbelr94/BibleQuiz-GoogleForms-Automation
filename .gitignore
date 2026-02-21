@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Testing
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+
+# Google Auth (SENSITIVE)
+credentials.json
+token.json
+
+# Logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store

@@ -1,0 +1,20 @@
+# CLI & UX
+typer[all]>=0.9.0
+rich>=13.0.0
+
+# Data Validation
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+python-dotenv>=1.0.0
+
+# Google APIs
+google-api-python-client>=2.90.0
+google-auth-httplib2>=0.1.0
+google-auth-oauthlib>=1.0.0
+
+# Development & Testing
+pytest>=7.0.0
+mypy>=1.0.0
+black>=23.0.0
+isort>=5.12.0
+pytest-mock>=3.10.0
