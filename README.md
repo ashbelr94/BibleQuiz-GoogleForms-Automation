@@ -12,6 +12,7 @@ A robust Python CLI tool designed to automate the weekly creation of multilingua
 - **Template-Based Sync:** Preserves advanced Google Form settings (Manual Grade Release, Verified Email, Progress Bar) by copying a master template.
 - **Interactive Preview:** Beautiful terminal-based side-by-side translation previews using the `Rich` library.
 - **Web UI:** Modern, interactive web interface using `Gradio` for non-technical users.
+- **Desktop Mode:** Native Windows standalone window experience with automatic process cleanup.
 - **Safe & Robust:** Strict data validation using `Pydantic v2` and secure OAuth 2.0 authentication.
 - **Scalable:** Architected to easily support additional languages and future Web UI integration.
 
@@ -19,6 +20,7 @@ A robust Python CLI tool designed to automate the weekly creation of multilingua
 
 - **CLI Framework:** Typer
 - **UI/Formatting:** Rich
+- **Desktop Wrapper:** PyWebView
 - **Data Validation:** Pydantic v2
 - **Google Cloud APIs:** Sheets, Forms, and Drive (v3)
 - **Configuration:** Pydantic-Settings with `.env` support
@@ -31,7 +33,13 @@ A robust Python CLI tool designed to automate the weekly creation of multilingua
 
 ## 🚀 Quick Start
 
-### 1. Installation
+### 🏁 Windows Desktop App (Easiest for Non-Technical Users)
+If you are on Windows, you don't need to run commands. Just follow these steps:
+1.  Ensure you have **Python 3.10+** installed.
+2.  Double-click `RunBibleQuiz.bat`.
+3.  The app will automatically set up its environment and open in a native window.
+
+### 🐍 CLI / Developer Setup
 ```bash
 # Clone the repository
 git clone https://github.com/ashbelr94/BibleQuiz-GoogleForms-Automation.git
@@ -45,7 +53,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Configuration
+### ⚙️ Configuration
 Create a `.env` file in the root directory:
 ```env
 SOURCE_SPREADSHEET_ID=your_id
@@ -56,7 +64,7 @@ TAMIL_RESPONSE_SPREADSHEET_ID=your_id
 ENGLISH_RESPONSE_SPREADSHEET_ID=your_id
 ```
 
-### 3. Usage
+### 💻 Command Line Usage
 ```bash
 # Set PYTHONPATH
 export PYTHONPATH=$PYTHONPATH:.
@@ -66,6 +74,9 @@ python3 src/interfaces/cli/main.py preview --week 1
 
 # Create forms for a specific week
 python3 src/interfaces/cli/main.py create --week 1
+
+# Launch the Web UI
+python3 src/interfaces/cli/main.py ui
 ```
 
 ## 📖 Documentation
