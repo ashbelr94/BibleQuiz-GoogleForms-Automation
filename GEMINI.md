@@ -8,6 +8,7 @@
 - **CLI UX:** Use `Rich` library for terminal output, tables, and previews.
 - **Documentation:** Google-style docstrings for all functions and classes.
 - **Testing:** `pytest` for unit and integration tests. Mock external APIs (Google) in tests.
+- **Workflow:** For finalized tasks, follow the [Git Wrap-up Workflow](docs/rules/GIT_WORKFLOW.md) for staging, committing, and pushing changes.
 
 ## Contextual Mandates
 - **Modularity:** Core logic must be decoupled from the CLI. The `UseCase` layer should be importable by a future Gradio UI without modification.
