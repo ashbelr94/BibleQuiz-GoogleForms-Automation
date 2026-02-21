@@ -6,7 +6,9 @@ from rich.panel import Panel
 
 from src.infrastructure.google.auth import get_google_credentials
 from src.infrastructure.google.sheets import GoogleSheetRepository
+from src.infrastructure.google.forms import GoogleFormService
 from src.application.preview_quiz import PreviewQuizUseCase
+from src.application.create_quiz import CreateQuizUseCase
 from src.domain.models import Language
 
 app = typer.Typer(help="Bible Quiz Automation CLI")
@@ -72,9 +74,6 @@ def preview(
         console.print(f"[bold red]Unexpected Error:[/bold red] {str(e)}")
         raise typer.Exit(code=1)
 
-from src.infrastructure.google.forms import GoogleFormService
-from src.application.create_quiz import CreateQuizUseCase
-
 @app.command()
 def create(
     week: int = typer.Option(..., help="The week number to create forms for"),
@@ -117,6 +116,21 @@ def create(
 
     except Exception as e:
         console.print(f"[bold red]Unexpected Error:[/bold red] {str(e)}")
+        raise typer.Exit(code=1)
+
+@app.command()
+def ui(
+    share: bool = typer.Option(False, help="Whether to generate a public shareable link")
+):
+    """
+    Launches the Gradio Web UI for a more interactive experience.
+    """
+    try:
+        from src.interfaces.ui.gradio_app import demo
+        console.print("[bold blue]Starting Gradio UI...[/bold blue]")
+        demo.launch(share=share)
+    except Exception as e:
+        console.print(f"[bold red]Error launching UI:[/bold red] {str(e)}")
         raise typer.Exit(code=1)
 
 if __name__ == "__main__":

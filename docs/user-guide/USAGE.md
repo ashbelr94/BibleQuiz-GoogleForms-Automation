@@ -35,7 +35,27 @@ ENGLISH_RESPONSE_SPREADSHEET_ID=your_english_response_spreadsheet_id_here
 
 ---
 
-## 2. Weekly Workflow
+## 2. Interactive Web UI (Recommended)
+
+For a more user-friendly experience, you can use the Gradio-based web interface.
+
+```bash
+# Set PYTHONPATH
+export PYTHONPATH=$PYTHONPATH:.
+
+# Launch the UI
+python3 src/interfaces/cli/main.py ui
+```
+
+**Features of the Web UI:**
+- **Easy Selection:** Choose the week number and language from simple inputs.
+- **Tabbed Preview:** Switch between English and Tamil previews with dedicated tabs.
+- **Data Tables:** View questions in a structured, searchable table.
+- **One-Click Creation:** Click a button to generate forms and get clickable links instantly.
+
+---
+
+## 3. CLI Workflow
 
 ### Step 0: The Template Form (One-time Setup)
 To automate advanced settings that the Google API doesn't yet support, we use a template:

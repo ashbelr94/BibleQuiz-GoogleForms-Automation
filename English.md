@@ -18,3 +18,5 @@ Rules & Regulations:
       4.Late submissions will not be accepted.
 
       5.If more than one member from the same family joins this Bible reading group, each person should read the Bible individually and find their own answers. Group discussions should be avoided, because this is not a competition, but an initiative taken for the personal spiritual growth of each individual.
+
+Note: You may correct or update your answers anytime until before 11:00 PM Saturday.

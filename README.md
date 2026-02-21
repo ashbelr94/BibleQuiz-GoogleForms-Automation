@@ -11,6 +11,7 @@ A robust Python CLI tool designed to automate the weekly creation of multilingua
 - **Clean Architecture:** Built with modularity in mind, separating domain logic from external Google API infrastructure.
 - **Template-Based Sync:** Preserves advanced Google Form settings (Manual Grade Release, Verified Email, Progress Bar) by copying a master template.
 - **Interactive Preview:** Beautiful terminal-based side-by-side translation previews using the `Rich` library.
+- **Web UI:** Modern, interactive web interface using `Gradio` for non-technical users.
 - **Safe & Robust:** Strict data validation using `Pydantic v2` and secure OAuth 2.0 authentication.
 - **Scalable:** Architected to easily support additional languages and future Web UI integration.
 
